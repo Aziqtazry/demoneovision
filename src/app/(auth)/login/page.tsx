@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
@@ -36,7 +38,7 @@ export default function LoginPage() {
         <div className="max-w-md text-center space-y-6">
           <div className="flex justify-center">
             <Image
-              src="/neovision.png"
+              src={`${basePath}/neovision.png`}
               alt="NV Logo"
               width={300}
               height={300}
@@ -57,7 +59,7 @@ export default function LoginPage() {
         <div className="w-full max-w-md space-y-8">
           <div className="lg:hidden flex justify-center mb-4">
             <Image
-              src="/Majlis_Bandaraya_Seremban.svg"
+              src={`${basePath}/Majlis_Bandaraya_Seremban.svg`}
               alt="MBS Logo"
               width={64}
               height={64}

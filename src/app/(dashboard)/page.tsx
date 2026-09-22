@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { Activity } from "lucide-react";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 const events = [
   {
     id: 1,
@@ -73,7 +75,7 @@ export default function DashboardPage() {
 
           {/* Snapshot placeholder image */}
           <img
-            src="/Untitled.png"   // ← change filename if needed
+            src={`${basePath}/Untitled.png`}
             alt="Camera snapshot"
             className="w-full h-full object-cover"
           />

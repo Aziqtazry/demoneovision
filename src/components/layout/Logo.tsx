@@ -1,11 +1,13 @@
 import Image from "next/image";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export default function Logo() {
   return (
     <div className="flex items-center gap-3">
       {/* Real Logo */}
       <Image
-        src="/neovision.png"
+        src={`${basePath}/neovision.png`}
         alt="NV Logo"
         width={40}
         height={40}
