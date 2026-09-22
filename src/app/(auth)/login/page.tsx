@@ -54,10 +54,10 @@ export default function LoginPage() {
         <div className="w-full max-w-md space-y-8">
           <div className="lg:hidden flex justify-center mb-4">
             <Image
-              src={`${basePath}/Majlis_Bandaraya_Seremban.svg`}
-              alt="MBS Logo"
-              width={64}
-              height={64}
+              src={`${basePath}/neovision.png`}
+              alt="NeoVision Logo"
+              width={112}
+              height={112}
               className="object-contain"
               priority
             />

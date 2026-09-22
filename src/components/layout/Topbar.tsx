@@ -1,9 +1,9 @@
 "use client";
 
-import { Bell, CloudSun, LogOut, User } from "lucide-react";
+import { Bell, CloudSun, LogOut, Menu, User } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
-export default function Topbar() {
+export default function Topbar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
   const { user, logout } = useAuth();
 
   const now = new Date();
@@ -18,42 +18,53 @@ export default function Topbar() {
   });
 
   return (
-    <header className="h-14 bg-[#0b1220] border-b border-slate-800 flex items-center justify-between px-6 sticky top-0 z-10">
-      <div className="flex items-center gap-4">
-        <h1 className="text-white font-medium text-sm">
+    <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center justify-between gap-2 border-b border-slate-800 bg-[#0b1220] px-3 sm:px-6">
+      <div className="flex min-w-0 items-center gap-2 sm:gap-4">
+        <button
+          type="button"
+          onClick={onOpenSidebar}
+          className="inline-flex shrink-0 items-center justify-center rounded-lg p-2 text-slate-400 transition hover:bg-slate-800 hover:text-white lg:hidden"
+          aria-label="Open navigation"
+        >
+          <Menu size={20} />
+        </button>
+        <h1 className="truncate text-xs font-medium text-white sm:text-sm">
           AI Detection Dashboard
         </h1>
       </div>
 
-      <div className="flex items-center gap-5">
-        {/* Weather / Time */}
-        <div className="flex items-center gap-2 text-slate-300 text-sm">
+      <div className="flex shrink-0 items-center gap-1 sm:gap-3 lg:gap-5">
+        <div className="flex items-center gap-2 text-sm text-slate-300">
           <CloudSun size={16} className="text-amber-400" />
           <span>28°C</span>
-          <span className="text-slate-500">|</span>
-          <span className="text-slate-400">{date}</span>
-          <span className="font-mono text-blue-400">{time}</span>
+          <span className="hidden text-slate-500 md:inline">|</span>
+          <span className="hidden text-slate-400 md:inline">{date}</span>
+          <span className="hidden font-mono text-blue-400 sm:inline">{time}</span>
         </div>
 
-        {/* Notification */}
-        <button className="relative p-2 rounded-lg hover:bg-slate-800 transition">
+        <button
+          type="button"
+          className="relative rounded-lg p-2 transition hover:bg-slate-800"
+          aria-label="Notifications"
+        >
           <Bell size={18} className="text-slate-400" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+          <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-red-500" />
         </button>
 
-        {/* User + Logout */}
-        <div className="flex items-center gap-3 pl-3 border-l border-slate-700">
-          <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center">
+        <div className="flex items-center gap-2 border-l border-slate-700 pl-2 sm:gap-3 sm:pl-3">
+          <div className="hidden h-8 w-8 items-center justify-center rounded-full bg-slate-700 sm:flex">
             <User size={16} className="text-slate-300" />
           </div>
-          <div className="text-xs">
-            <p className="text-slate-200 font-medium">{user?.username}</p>
-            <p className="text-slate-500 capitalize">{user?.role}</p>
+          <div className="hidden text-xs md:block">
+            <p className="font-medium text-slate-200">{user?.username}</p>
+            <p className="capitalize text-slate-500">{user?.role}</p>
           </div>
           <button
+            type="button"
             onClick={logout}
-            className="p-2 rounded-lg hover:bg-slate-800 transition text-slate-400 hover:text-red-400"
+            className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-800 hover:text-red-400"
             title="Logout"
+            aria-label="Logout"
           >
             <LogOut size={16} />
           </button>

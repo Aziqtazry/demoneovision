@@ -4,18 +4,17 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export default function Logo() {
   return (
-    <div className="flex items-center gap-3">
-      {/* Real Logo */}
+    <div className="flex min-w-0 items-center gap-3">
       <Image
         src={`${basePath}/neovision.png`}
-        alt="NV Logo"
+        alt="NeoVision Logo"
         width={40}
         height={40}
-        className="rounded-full object-contain"
+        className="shrink-0 object-contain"
         priority
       />
 
-      <div className="flex flex-col">
+      <div className="flex min-w-0 flex-col">
         <span className="text-white font-semibold text-sm leading-tight">
           AI Detection
         </span>

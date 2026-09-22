@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import Sidebar from "@/components/layout/Sidebar";
@@ -13,12 +13,25 @@ export default function DashboardLayout({
 }) {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       router.push("/login");
     }
   }, [isAuthenticated, isLoading, router]);
+
+  useEffect(() => {
+    if (!isMobileSidebarOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMobileSidebarOpen(false);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileSidebarOpen]);
 
   if (isLoading || !isAuthenticated) {
     return (
@@ -30,10 +43,24 @@ export default function DashboardLayout({
 
   return (
     <div className="flex h-screen bg-[#070b14] text-slate-200 overflow-hidden">
-      <Sidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Topbar />
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+      {isMobileSidebarOpen && (
+        <button
+          type="button"
+          className="fixed inset-0 z-30 bg-black/60 backdrop-blur-[1px] lg:hidden"
+          onClick={() => setIsMobileSidebarOpen(false)}
+          aria-label="Close navigation"
+        />
+      )}
+
+      <Sidebar
+        isCollapsed={isSidebarCollapsed}
+        isMobileOpen={isMobileSidebarOpen}
+        onToggleCollapse={() => setIsSidebarCollapsed((collapsed) => !collapsed)}
+        onCloseMobile={() => setIsMobileSidebarOpen(false)}
+      />
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        <Topbar onOpenSidebar={() => setIsMobileSidebarOpen(true)} />
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
       </div>
     </div>
   );
