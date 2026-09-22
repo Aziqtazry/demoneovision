@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -8,10 +8,10 @@ import { Activity, Maximize2, X } from "lucide-react";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 const cameraFeeds = [
-  { id: 1, name: "MBS-KDN-C1", location: "Sungai Taman Ros Merah", src: "camera-1.mp4" },
-  { id: 2, name: "MBS-KDN-C2", location: "Sungai Taman Ros Merah", src: "camera-2.mp4" },
-  { id: 3, name: "MBS-KDN-C3", location: "Sungai Taman Ros Merah", src: "camera-3.mp4" },
-  { id: 4, name: "MBS-KDN-C4", location: "Sungai Taman Ros Merah", src: "camera-4.mp4" },
+  { id: 1, name: "MBS-KDN-C1", location: "Sungai Taman Ros Merah", src: "camera-1.v2.mp4" },
+  { id: 2, name: "MBS-KDN-C2", location: "Sungai Taman Ros Merah", src: "camera-2.v2.mp4" },
+  { id: 3, name: "MBS-KDN-C3", location: "Sungai Taman Ros Merah", src: "camera-3.v2.mp4" },
+  { id: 4, name: "MBS-KDN-C4", location: "Sungai Taman Ros Merah", src: "camera-4.v2.mp4" },
 ];
 
 const events = [
@@ -87,7 +87,7 @@ export default function DashboardPage() {
       <div>
         <h1 className="text-xl font-semibold text-white">Dashboard</h1>
         <p className="text-sm text-slate-400 mt-0.5">
-          Real-time flood monitoring • Sungai Taman Ros Merah
+          Real-time flood monitoring â€¢ Sungai Taman Ros Merah
         </p>
       </div>
 
@@ -167,7 +167,7 @@ export default function DashboardPage() {
                 <h2 id="selected-camera-title" className="font-semibold text-white">
                   {selectedCamera.name}
                 </h2>
-                <p className="text-xs text-slate-400">{selectedCamera.location} · Demo replay</p>
+                <p className="text-xs text-slate-400">{selectedCamera.location} Â· Demo replay</p>
               </div>
               <button
                 type="button"
@@ -235,3 +235,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+
