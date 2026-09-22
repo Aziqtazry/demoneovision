@@ -7,6 +7,13 @@ import { Activity } from "lucide-react";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
+const cameraFeeds = [
+  { id: 1, name: "MBS-KDN-C1", location: "Sungai Taman Ros Merah", src: "0922.mp4" },
+  { id: 2, name: "MBS-KDN-C2", location: "Sungai Taman Ros Merah", src: "0922(1).mp4" },
+  { id: 3, name: "MBS-KDN-C3", location: "Sungai Taman Ros Merah", src: "0922(2).mp4" },
+  { id: 4, name: "MBS-KDN-C4", location: "Sungai Taman Ros Merah", src: "0922(3).mp4" },
+];
+
 const events = [
   {
     id: 1,
@@ -64,29 +71,55 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* Single Livestream */}
-      <div className="bg-slate-900/80 border border-slate-700 rounded-xl overflow-hidden">
-        <div className="aspect-video bg-slate-950 relative">
-          {/* Live badge */}
-          <div className="absolute top-4 left-4 flex items-center gap-2 z-10">
-            <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
-            <span className="text-sm text-white font-medium">LIVE</span>
+      {/* Demo camera playback grid */}
+      <section className="space-y-3" aria-labelledby="camera-playback-heading">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <h2 id="camera-playback-heading" className="font-semibold text-white">
+              Camera Playback
+            </h2>
+            <p className="text-sm text-slate-400">
+              Recorded footage for dashboard demonstration
+            </p>
           </div>
-
-          {/* Snapshot placeholder image */}
-          <img
-            src={`${basePath}/Untitled.png`}
-            alt="Camera snapshot"
-            className="w-full h-full object-cover"
-          />
-
-          {/* Camera name */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-5">
-            <p className="text-white font-medium">MBS-KDN-C1 • Sungai Taman Ros Merah</p>
-            <p className="text-slate-400 text-sm">Flood Detection Camera</p>
-          </div>
+          <span className="text-xs text-slate-500 whitespace-nowrap">4 cameras</span>
         </div>
-      </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {cameraFeeds.map((camera) => (
+            <article
+              key={camera.id}
+              className="bg-slate-900/80 border border-slate-700 rounded-xl overflow-hidden"
+            >
+              <div className="aspect-video bg-black relative">
+                <video
+                  className="h-full w-full object-cover"
+                  src={`${basePath}/${camera.src}`}
+                  aria-label={`${camera.name} recorded camera footage`}
+                  autoPlay
+                  controls
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+
+                <div className="absolute top-3 left-3 flex items-center gap-2 rounded-md bg-black/65 px-2.5 py-1 pointer-events-none">
+                  <span className="w-2 h-2 rounded-full bg-amber-400" />
+                  <span className="text-[11px] text-white font-semibold tracking-wide">
+                    DEMO REPLAY
+                  </span>
+                </div>
+
+                <div className="absolute bottom-10 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent px-4 pt-8 pb-3 pointer-events-none">
+                  <p className="text-white text-sm font-medium">{camera.name}</p>
+                  <p className="text-slate-300 text-xs">{camera.location}</p>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
       {/* Event Log */}
       <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-5">
