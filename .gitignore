@@ -1,0 +1,17 @@
+node_modules/
+.next/
+out/
+
+# Environment files and local platform state
+.env*
+!.env.example
+.vercel/
+
+# Generated archives and build metadata
+*.rar
+*.zip
+*.tsbuildinfo
+deploy/amplify/
+
+# Account-specific AWS deployment output
+deploy/aws/ecs-express-service.json
