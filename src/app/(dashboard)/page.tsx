@@ -8,10 +8,10 @@ import { Activity, Maximize2, X } from "lucide-react";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 const cameraFeeds = [
-  { id: 1, name: "MBS-KDN-C1", location: "Sungai Taman Ros Merah", src: "0922.mp4" },
-  { id: 2, name: "MBS-KDN-C2", location: "Sungai Taman Ros Merah", src: "0922(1).mp4" },
-  { id: 3, name: "MBS-KDN-C3", location: "Sungai Taman Ros Merah", src: "0922(2).mp4" },
-  { id: 4, name: "MBS-KDN-C4", location: "Sungai Taman Ros Merah", src: "0922(3).mp4" },
+  { id: 1, name: "MBS-KDN-C1", location: "Sungai Taman Ros Merah", src: "camera-1.mp4" },
+  { id: 2, name: "MBS-KDN-C2", location: "Sungai Taman Ros Merah", src: "camera-2.mp4" },
+  { id: 3, name: "MBS-KDN-C3", location: "Sungai Taman Ros Merah", src: "camera-3.mp4" },
+  { id: 4, name: "MBS-KDN-C4", location: "Sungai Taman Ros Merah", src: "camera-4.mp4" },
 ];
 
 const events = [
