@@ -6,7 +6,7 @@ import { AuthProvider } from "@/context/AuthContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Flood Detection System | MBS-KDN",
+  title: "AI Detection System",
   description: "AI-powered flood monitoring dashboard",
 };
 
