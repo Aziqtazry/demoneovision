@@ -12,7 +12,7 @@ const menuItems = [
     name: "Dashboard",
     href: "/",
     icon: LayoutDashboard,
-    roles: ["admin"],
+    roles: ["admin", "public"],
   },
   {
     name: "Water Level",

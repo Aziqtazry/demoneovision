@@ -20,12 +20,7 @@ export default function LoginPage() {
 
     const authenticatedUser = login(username.trim(), password);
     if (authenticatedUser) {
-      // Redirect based on role
-      if (authenticatedUser.role === "public") {
-        router.push("/water-level");
-      } else {
-        router.push("/");
-      }
+      router.push("/");
     } else {
       setError("Invalid username or password");
     }
