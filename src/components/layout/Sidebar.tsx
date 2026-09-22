@@ -4,8 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
+  LogOut,
   PanelLeftClose,
   PanelLeftOpen,
+  User,
   Waves,
   X,
 } from "lucide-react";
@@ -42,7 +44,12 @@ export default function Sidebar({
   onCloseMobile,
 }: SidebarProps) {
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    onCloseMobile();
+    logout();
+  };
 
   const filteredMenu = menuItems.filter((item) =>
     item.roles.includes(user?.role || "")
@@ -113,6 +120,46 @@ export default function Sidebar({
           );
         })}
       </nav>
+
+      <div
+        className={cn(
+          "border-t border-slate-800 p-3",
+          isCollapsed && "lg:px-2"
+        )}
+      >
+        <div
+          className={cn(
+            "flex items-center gap-3 rounded-xl bg-slate-900/70 p-3",
+            isCollapsed && "lg:justify-center lg:p-2"
+          )}
+        >
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-600/20 text-blue-400">
+            <User size={18} aria-hidden="true" />
+          </div>
+          <div className={cn("min-w-0 flex-1", isCollapsed && "lg:hidden")}>
+            <p className="truncate text-sm font-medium text-slate-200">
+              {user?.username ?? "User"}
+            </p>
+            <p className="truncate text-xs capitalize text-slate-500">
+              {user?.role ?? "account"}
+            </p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleLogout}
+          className={cn(
+            "mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-300 transition hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400",
+            isCollapsed && "lg:px-2"
+          )}
+          title="Sign out"
+          aria-label="Sign out"
+        >
+          <LogOut size={16} aria-hidden="true" />
+          <span className={cn(isCollapsed && "lg:hidden")}>Sign out</span>
+        </button>
+      </div>
 
       <div
         className={cn(

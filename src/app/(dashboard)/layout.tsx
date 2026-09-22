@@ -48,7 +48,7 @@ export default function DashboardLayout({
         <button
           type="button"
           onClick={() => setIsMobileSidebarOpen(true)}
-          className="fixed left-2 top-2 z-50 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-700 bg-slate-800 text-white shadow-lg shadow-black/30 transition hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 lg:hidden"
+          className="fixed left-2 top-3 z-50 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-700 bg-slate-800 text-white shadow-lg shadow-black/30 transition hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 lg:hidden"
           aria-label="Open navigation"
           aria-controls="primary-navigation"
           aria-expanded="false"
