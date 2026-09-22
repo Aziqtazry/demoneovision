@@ -36,7 +36,7 @@ jobs:
         run: npm run build
         env:
           BUILD_STATIC_EXPORT: "true"
-          NEXT_PUBLIC_BASE_PATH: "/demoneovision"
+          NEXT_PUBLIC_BASE_PATH: ""
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
