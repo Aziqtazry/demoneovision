@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { Activity } from "lucide-react";
+import { Activity, Maximize2, X } from "lucide-react";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -48,6 +48,9 @@ const events = [
 export default function DashboardPage() {
   const { user } = useAuth();
   const router = useRouter();
+  const [selectedCamera, setSelectedCamera] = useState<
+    (typeof cameraFeeds)[number] | null
+  >(null);
 
   // Redirect public users to Water Level page
   useEffect(() => {
@@ -55,6 +58,23 @@ export default function DashboardPage() {
       router.replace("/water-level");
     }
   }, [user, router]);
+
+  useEffect(() => {
+    if (!selectedCamera) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedCamera(null);
+    };
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedCamera]);
 
   // Don't render dashboard while redirecting
   if (user?.role === "public") {
@@ -93,9 +113,10 @@ export default function DashboardPage() {
             >
               <div className="aspect-video bg-black relative">
                 <video
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover cursor-zoom-in"
                   src={`${basePath}/${camera.src}`}
                   aria-label={`${camera.name} recorded camera footage`}
+                  onClick={() => setSelectedCamera(camera)}
                   autoPlay
                   controls
                   loop
@@ -111,6 +132,15 @@ export default function DashboardPage() {
                   </span>
                 </div>
 
+                <button
+                  type="button"
+                  onClick={() => setSelectedCamera(camera)}
+                  className="absolute top-3 right-3 z-10 rounded-md bg-black/65 p-2 text-white transition hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  aria-label={`Enlarge ${camera.name}`}
+                >
+                  <Maximize2 size={16} />
+                </button>
+
                 <div className="absolute bottom-10 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent px-4 pt-8 pb-3 pointer-events-none">
                   <p className="text-white text-sm font-medium">{camera.name}</p>
                   <p className="text-slate-300 text-xs">{camera.location}</p>
@@ -120,6 +150,52 @@ export default function DashboardPage() {
           ))}
         </div>
       </section>
+
+      {selectedCamera && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 sm:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="selected-camera-title"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setSelectedCamera(null);
+          }}
+        >
+          <div className="w-full max-w-6xl overflow-hidden rounded-xl border border-slate-700 bg-slate-950 shadow-2xl shadow-black/60">
+            <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
+              <div>
+                <h2 id="selected-camera-title" className="font-semibold text-white">
+                  {selectedCamera.name}
+                </h2>
+                <p className="text-xs text-slate-400">{selectedCamera.location} · Demo replay</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedCamera(null)}
+                className="rounded-lg p-2 text-slate-300 transition hover:bg-slate-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                aria-label="Close enlarged camera view"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="aspect-video bg-black">
+              <video
+                key={selectedCamera.id}
+                className="h-full w-full object-contain"
+                src={`${basePath}/${selectedCamera.src}`}
+                aria-label={`${selectedCamera.name} enlarged recorded camera footage`}
+                autoPlay
+                controls
+                loop
+                muted
+                playsInline
+                preload="auto"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Event Log */}
       <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-5">
