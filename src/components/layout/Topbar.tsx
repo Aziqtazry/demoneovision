@@ -1,45 +1,45 @@
 "use client";
 
-import { Bell, CloudSun, LogOut, Menu, User } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Bell, CloudSun, LogOut, User } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
-export default function Topbar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
+export default function Topbar() {
   const { user, logout } = useAuth();
+  const [now, setNow] = useState<Date | null>(null);
 
-  const now = new Date();
-  const time = now.toLocaleTimeString("en-MY", {
+  useEffect(() => {
+    const updateClock = () => setNow(new Date());
+    updateClock();
+    const interval = window.setInterval(updateClock, 30_000);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const time = now?.toLocaleTimeString("en-MY", {
     hour: "2-digit",
     minute: "2-digit",
   });
-  const date = now.toLocaleDateString("en-MY", {
+  const date = now?.toLocaleDateString("en-MY", {
     weekday: "short",
     day: "numeric",
     month: "short",
   });
 
   return (
-    <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center justify-between gap-2 border-b border-slate-800 bg-[#0b1220] px-3 sm:px-6">
+    <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center justify-between gap-2 border-b border-slate-800 bg-[#0b1220] pl-14 pr-3 sm:px-6">
       <div className="flex min-w-0 items-center gap-2 sm:gap-4">
-        <button
-          type="button"
-          onClick={onOpenSidebar}
-          className="inline-flex shrink-0 items-center justify-center rounded-lg p-2 text-slate-400 transition hover:bg-slate-800 hover:text-white lg:hidden"
-          aria-label="Open navigation"
-        >
-          <Menu size={20} />
-        </button>
         <h1 className="truncate text-xs font-medium text-white sm:text-sm">
           AI Detection Dashboard
         </h1>
       </div>
 
-      <div className="flex shrink-0 items-center gap-1 sm:gap-3 lg:gap-5">
+      <div className="hidden shrink-0 items-center gap-1 sm:flex sm:gap-3 lg:gap-5">
         <div className="flex items-center gap-2 text-sm text-slate-300">
           <CloudSun size={16} className="text-amber-400" />
           <span>28°C</span>
           <span className="hidden text-slate-500 md:inline">|</span>
-          <span className="hidden text-slate-400 md:inline">{date}</span>
-          <span className="hidden font-mono text-blue-400 sm:inline">{time}</span>
+          <span className="hidden text-slate-400 md:inline">{date ?? ""}</span>
+          <span className="hidden font-mono text-blue-400 sm:inline">{time ?? "--:--"}</span>
         </div>
 
         <button

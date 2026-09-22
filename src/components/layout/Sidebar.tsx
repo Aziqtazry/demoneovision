@@ -50,6 +50,7 @@ export default function Sidebar({
 
   return (
     <aside
+      id="primary-navigation"
       className={cn(
         "fixed inset-y-0 left-0 z-40 flex h-dvh w-64 flex-col border-r border-slate-800 bg-[#0b1220] transition-[transform,width] duration-300 ease-in-out lg:static lg:z-auto lg:h-screen lg:translate-x-0",
         isMobileOpen ? "translate-x-0" : "-translate-x-full",

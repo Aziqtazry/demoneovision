@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Menu } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import Sidebar from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
@@ -43,6 +44,19 @@ export default function DashboardLayout({
 
   return (
     <div className="flex h-screen bg-[#070b14] text-slate-200 overflow-hidden">
+      {!isMobileSidebarOpen && (
+        <button
+          type="button"
+          onClick={() => setIsMobileSidebarOpen(true)}
+          className="fixed left-2 top-2 z-50 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-700 bg-slate-800 text-white shadow-lg shadow-black/30 transition hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 lg:hidden"
+          aria-label="Open navigation"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <Menu size={22} aria-hidden="true" />
+        </button>
+      )}
+
       {isMobileSidebarOpen && (
         <button
           type="button"
@@ -59,7 +73,7 @@ export default function DashboardLayout({
         onCloseMobile={() => setIsMobileSidebarOpen(false)}
       />
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <Topbar onOpenSidebar={() => setIsMobileSidebarOpen(true)} />
+        <Topbar />
         <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
       </div>
     </div>

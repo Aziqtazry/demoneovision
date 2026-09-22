@@ -74,7 +74,7 @@ export default function DashboardPage() {
       <div>
         <h1 className="text-xl font-semibold text-white">Dashboard</h1>
         <p className="text-sm text-slate-400 mt-0.5">
-          Real-time flood monitoring â€¢ Sungai Taman Ros Merah
+          Real-time flood monitoring &bull; Sungai Taman Ros Merah
         </p>
       </div>
 
@@ -166,7 +166,7 @@ export default function DashboardPage() {
                 <h2 id="selected-camera-title" className="font-semibold text-white">
                   {selectedCamera.name}
                 </h2>
-                <p className="text-xs text-slate-400">{selectedCamera.location} Â· Demo replay</p>
+                <p className="text-xs text-slate-400">{selectedCamera.location} &middot; Demo replay</p>
               </div>
               <button
                 type="button"
